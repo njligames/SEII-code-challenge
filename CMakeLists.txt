@@ -29,11 +29,13 @@ add_executable(ISHNE_Viewer
 		third_party/glad/glad/glad.c
 		third_party/glad/KHR/khrplatform.h
 		src/Main.cpp
+        src/Ishne.h
+        src/Ishne.cpp
 		)
 target_compile_features(ISHNE_Viewer PUBLIC c_std_11 cxx_std_17)
-target_link_libraries(ISHNE_Viewer 
-		PUBLIC 
-		$<$<CXX_COMPILER_ID:GNU>:stdc++fs> 
+target_link_libraries(ISHNE_Viewer
+		PUBLIC
+		$<$<CXX_COMPILER_ID:GNU>:stdc++fs>
 		glfw
 		)
 target_include_directories(ISHNE_Viewer PUBLIC

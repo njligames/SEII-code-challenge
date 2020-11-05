@@ -6,6 +6,8 @@
 
 using namespace std::chrono_literals;
 
+#include "Ishne.h"
+
 /**
  * A structure containing a loaded ECG waveform.
  */
@@ -69,9 +71,13 @@ public:
 				viewer->MoveView(+viewer->moveSpeed);
 			}
 		});
+        
+        mIshneData = new Ishne();
 	}
 
 	~ECGViewer() {
+        delete mIshneData;
+        
 		glfwDestroyWindow(window);
 		glfwTerminate();
 	}
@@ -87,6 +93,12 @@ public:
 
 	void LoadFile(std::filesystem::path filename) {
 		std::cout << "Loading ISHNE: " << filename << "\n";
+        
+        try {
+            mIshneData->init(filename);
+        } catch (const std::runtime_error& error) {
+            std::cout << error.what() << std::endl;
+        }
 	}
 	
 	void MoveView(std::chrono::seconds s) {
@@ -99,6 +111,8 @@ private:
 	std::chrono::seconds moveSpeed = 10s;
 	bool closed = false;
 	ECG *ecg = nullptr;
+    
+    Ishne *mIshneData;
 };
 
 int main(int argc, char **argv) {
